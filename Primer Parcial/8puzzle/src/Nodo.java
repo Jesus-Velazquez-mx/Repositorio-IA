@@ -1,90 +1,141 @@
+
 import java.util.LinkedList;
 
 public class Nodo {
+
     String estado;
     int nivel;
     int costo;
+    Nodo padre;
 
     public Nodo(String estado) {
         this.estado = estado;
+        this.nivel = 0;
+        this.costo = 0;
+        this.padre = null;
     }
 
-    LinkedList<Nodo> generarSucesores(String estadoActual) {
+    public Nodo(String estado, int nivel) {
+        this.estado = estado;
+        this.nivel = nivel;
+        this.costo = 0;
+        this.padre = null;
+    }
+
+    public Nodo(String estado, int nivel, Nodo padre) {
+        this.estado = estado;
+        this.nivel = nivel;
+        this.costo = 0;
+        this.padre = padre;
+    }
+
+    public Nodo(String estado, int nivel, int costo, Nodo padre) {
+        this.estado = estado;
+        this.nivel = nivel;
+        this.costo = costo;
+        this.padre = padre;
+    }
+
+    LinkedList<Nodo> generarSucesores() {
         LinkedList<Nodo> sucesores = new LinkedList<>();
-        /* Aquí se busca la posición del vacío */
-        int indice = estadoActual.indexOf(' ');
+
+        /* Posición del espacio vacío */
+        int indice = this.estado.indexOf(' ');
+        /* El nivel del hijo siempre es el nivel del padre + 1 */
+        int nuevoNivel = this.nivel + 1;
+        // int nuevoCosto = this.costo + 1;
 
         switch (indice) {
             case 0:
                 // Puede ir a 1 (derecha) y 3 (abajo)
-                sucesores.add(new Nodo(intercambiar(estadoActual, 0, 1)));
-                sucesores.add(new Nodo(intercambiar(estadoActual, 0, 3)));
+                sucesores.add(new Nodo(intercambiar(this.estado, 0, 1), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 0, 3), nuevoNivel, this));
                 break;
 
             case 1:
                 // Puede ir a 0 (izq), 2 (der), 4 (abajo)
-                sucesores.add(new Nodo(intercambiar(estadoActual, 1, 0)));
-                sucesores.add(new Nodo(intercambiar(estadoActual, 1, 2)));
-                sucesores.add(new Nodo(intercambiar(estadoActual, 1, 4)));
+                sucesores.add(new Nodo(intercambiar(this.estado, 1, 0), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 1, 2), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 1, 4), nuevoNivel, this));
                 break;
 
             case 2:
                 // Puede ir a 1 (izq) y 5 (abajo)
-                sucesores.add(new Nodo(intercambiar(estadoActual, 2, 1)));
-                sucesores.add(new Nodo(intercambiar(estadoActual, 2, 5)));
+                sucesores.add(new Nodo(intercambiar(this.estado, 2, 1), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 2, 5), nuevoNivel, this));
                 break;
 
             case 3:
                 // Puede ir a 0 (arriba), 4 (der), 6 (abajo)
-                sucesores.add(new Nodo(intercambiar(estadoActual, 3, 0)));
-                sucesores.add(new Nodo(intercambiar(estadoActual, 3, 4)));
-                sucesores.add(new Nodo(intercambiar(estadoActual, 3, 6)));
+                sucesores.add(new Nodo(intercambiar(this.estado, 3, 0), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 3, 4), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 3, 6), nuevoNivel, this));
                 break;
 
             case 4:
                 // Puede ir a 1 (arriba), 3 (izq), 5 (der), 7 (abajo)
-                sucesores.add(new Nodo(intercambiar(estadoActual, 4, 1)));
-                sucesores.add(new Nodo(intercambiar(estadoActual, 4, 3)));
-                sucesores.add(new Nodo(intercambiar(estadoActual, 4, 5)));
-                sucesores.add(new Nodo(intercambiar(estadoActual, 4, 7)));
+                sucesores.add(new Nodo(intercambiar(this.estado, 4, 1), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 4, 3), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 4, 5), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 4, 7), nuevoNivel, this));
                 break;
 
             case 5:
                 // Puede ir a 2 (arriba), 4 (izq), 8 (abajo)
-                sucesores.add(new Nodo(intercambiar(estadoActual, 5, 2)));
-                sucesores.add(new Nodo(intercambiar(estadoActual, 5, 4)));
-                sucesores.add(new Nodo(intercambiar(estadoActual, 5, 8)));
+                sucesores.add(new Nodo(intercambiar(this.estado, 5, 2), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 5, 4), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 5, 8), nuevoNivel, this));
                 break;
 
             case 6:
                 // Puede ir a 3 (arriba) y 7 (der)
-                sucesores.add(new Nodo(intercambiar(estadoActual, 6, 3)));
-                sucesores.add(new Nodo(intercambiar(estadoActual, 6, 7)));
+                sucesores.add(new Nodo(intercambiar(this.estado, 6, 3), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 6, 7), nuevoNivel, this));
                 break;
 
             case 7:
                 // Puede ir a 4 (arriba), 6 (izq), 8 (der)
-                sucesores.add(new Nodo(intercambiar(estadoActual, 7, 4)));
-                sucesores.add(new Nodo(intercambiar(estadoActual, 7, 6)));
-                sucesores.add(new Nodo(intercambiar(estadoActual, 7, 8)));
+                sucesores.add(new Nodo(intercambiar(this.estado, 7, 4), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 7, 6), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 7, 8), nuevoNivel, this));
                 break;
 
             case 8:
                 // Puede ir a 5 (arriba) y 7 (izq)
-                sucesores.add(new Nodo(intercambiar(estadoActual, 8, 5)));
-                sucesores.add(new Nodo(intercambiar(estadoActual, 8, 7)));
+                sucesores.add(new Nodo(intercambiar(this.estado, 8, 5), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 8, 7), nuevoNivel, this));
                 break;
 
             default:
-                // Si no hay espacio, no genera nada
                 break;
         }
+
         return sucesores;
+    }
+
+    /* Imprime el camino completo desde la raíz hasta este nodo (recursivo)
+   y muestra cada estado en formato 3x3 */
+    public void imprimirCamino() {
+        // Primero ir hasta la raíz
+        if (this.padre != null) {
+            this.padre.imprimirCamino();
+        }
+        // Imprimir el estado actual en formato 3x3
+        for (int i = 0; i < 9; i++) {
+            System.out.print(this.estado.charAt(i) + " ");
+            if ((i + 1) % 3 == 0) {
+                System.out.println();
+            }
+        }
+
+        System.out.println("Nivel: " + this.nivel);
+        System.out.println("----------------");
     }
 
     private String intercambiar(String estado, int i, int j) {
         char a = estado.charAt(i);
         char b = estado.charAt(j);
+
         String resultado = "";
         for (int k = 0; k < estado.length(); k++) {
             if (k == i) {
