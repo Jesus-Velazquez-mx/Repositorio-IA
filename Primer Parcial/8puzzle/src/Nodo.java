@@ -1,7 +1,6 @@
-
 import java.util.LinkedList;
 
-public class Nodo {
+public class Nodo implements Comparable <Nodo> {
 
     String estado;
     int nivel;
@@ -38,12 +37,8 @@ public class Nodo {
 
     LinkedList<Nodo> generarSucesores() {
         LinkedList<Nodo> sucesores = new LinkedList<>();
-
-        /* Posición del espacio vacío */
         int indice = this.estado.indexOf(' ');
-        /* El nivel del hijo siempre es el nivel del padre + 1 */
         int nuevoNivel = this.nivel + 1;
-        // int nuevoCosto = this.costo + 1;
 
         switch (indice) {
             case 0:
@@ -51,27 +46,23 @@ public class Nodo {
                 sucesores.add(new Nodo(intercambiar(this.estado, 0, 1), nuevoNivel, this));
                 sucesores.add(new Nodo(intercambiar(this.estado, 0, 3), nuevoNivel, this));
                 break;
-
             case 1:
                 // Puede ir a 0 (izq), 2 (der), 4 (abajo)
                 sucesores.add(new Nodo(intercambiar(this.estado, 1, 0), nuevoNivel, this));
                 sucesores.add(new Nodo(intercambiar(this.estado, 1, 2), nuevoNivel, this));
                 sucesores.add(new Nodo(intercambiar(this.estado, 1, 4), nuevoNivel, this));
                 break;
-
             case 2:
                 // Puede ir a 1 (izq) y 5 (abajo)
                 sucesores.add(new Nodo(intercambiar(this.estado, 2, 1), nuevoNivel, this));
                 sucesores.add(new Nodo(intercambiar(this.estado, 2, 5), nuevoNivel, this));
                 break;
-
             case 3:
                 // Puede ir a 0 (arriba), 4 (der), 6 (abajo)
                 sucesores.add(new Nodo(intercambiar(this.estado, 3, 0), nuevoNivel, this));
                 sucesores.add(new Nodo(intercambiar(this.estado, 3, 4), nuevoNivel, this));
                 sucesores.add(new Nodo(intercambiar(this.estado, 3, 6), nuevoNivel, this));
                 break;
-
             case 4:
                 // Puede ir a 1 (arriba), 3 (izq), 5 (der), 7 (abajo)
                 sucesores.add(new Nodo(intercambiar(this.estado, 4, 1), nuevoNivel, this));
@@ -79,73 +70,56 @@ public class Nodo {
                 sucesores.add(new Nodo(intercambiar(this.estado, 4, 5), nuevoNivel, this));
                 sucesores.add(new Nodo(intercambiar(this.estado, 4, 7), nuevoNivel, this));
                 break;
-
             case 5:
                 // Puede ir a 2 (arriba), 4 (izq), 8 (abajo)
                 sucesores.add(new Nodo(intercambiar(this.estado, 5, 2), nuevoNivel, this));
                 sucesores.add(new Nodo(intercambiar(this.estado, 5, 4), nuevoNivel, this));
                 sucesores.add(new Nodo(intercambiar(this.estado, 5, 8), nuevoNivel, this));
                 break;
-
             case 6:
                 // Puede ir a 3 (arriba) y 7 (der)
                 sucesores.add(new Nodo(intercambiar(this.estado, 6, 3), nuevoNivel, this));
                 sucesores.add(new Nodo(intercambiar(this.estado, 6, 7), nuevoNivel, this));
                 break;
-
             case 7:
                 // Puede ir a 4 (arriba), 6 (izq), 8 (der)
                 sucesores.add(new Nodo(intercambiar(this.estado, 7, 4), nuevoNivel, this));
                 sucesores.add(new Nodo(intercambiar(this.estado, 7, 6), nuevoNivel, this));
                 sucesores.add(new Nodo(intercambiar(this.estado, 7, 8), nuevoNivel, this));
                 break;
-
             case 8:
                 // Puede ir a 5 (arriba) y 7 (izq)
                 sucesores.add(new Nodo(intercambiar(this.estado, 8, 5), nuevoNivel, this));
                 sucesores.add(new Nodo(intercambiar(this.estado, 8, 7), nuevoNivel, this));
                 break;
-
-            default:
-                break;
         }
-
         return sucesores;
     }
 
-    /* Imprime el camino completo desde la raíz hasta este nodo (recursivo)
-   y muestra cada estado en formato 3x3 */
     public void imprimirCamino() {
-        // Primero ir hasta la raíz
         if (this.padre != null) {
             this.padre.imprimirCamino();
         }
-        // Imprimir el estado actual en formato 3x3
         for (int i = 0; i < 9; i++) {
             System.out.print(this.estado.charAt(i) + " ");
             if ((i + 1) % 3 == 0) {
                 System.out.println();
             }
         }
-
         System.out.println("Nivel: " + this.nivel);
         System.out.println("----------------");
     }
 
     private String intercambiar(String estado, int i, int j) {
-        char a = estado.charAt(i);
-        char b = estado.charAt(j);
+        char[] chars = estado.toCharArray();
+        char temp = chars[i];
+        chars[i] = chars[j];
+        chars[j] = temp;
+        return new String(chars);
+    }
 
-        String resultado = "";
-        for (int k = 0; k < estado.length(); k++) {
-            if (k == i) {
-                resultado += b;
-            } else if (k == j) {
-                resultado += a;
-            } else {
-                resultado += estado.charAt(k);
-            }
-        }
-        return resultado;
+    @Override
+    public int compareTo(Nodo otro) {
+        return this.costo == otro.costo ? 0 : this.costo > otro.costo ? 1 : -1;
     }
 }
