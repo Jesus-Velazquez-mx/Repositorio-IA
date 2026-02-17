@@ -43,54 +43,54 @@ public class Nodo implements Comparable <Nodo> {
         switch (indice) {
             case 0:
                 // Puede ir a 1 (derecha) y 3 (abajo)
-                sucesores.add(new Nodo(intercambiar(this.estado, 0, 1), nuevoNivel, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 0, 3), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 0, 1), nuevoNivel, this.costo + 1, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 0, 3), nuevoNivel, this.costo + 1, this));
                 break;
             case 1:
                 // Puede ir a 0 (izq), 2 (der), 4 (abajo)
-                sucesores.add(new Nodo(intercambiar(this.estado, 1, 0), nuevoNivel, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 1, 2), nuevoNivel, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 1, 4), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 1, 0), nuevoNivel, this.costo + 1, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 1, 2), nuevoNivel, this.costo + 1, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 1, 4), nuevoNivel, this.costo + 1, this));
                 break;
             case 2:
                 // Puede ir a 1 (izq) y 5 (abajo)
-                sucesores.add(new Nodo(intercambiar(this.estado, 2, 1), nuevoNivel, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 2, 5), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 2, 1), nuevoNivel, this.costo + 1, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 2, 5), nuevoNivel, this.costo + 1, this));
                 break;
             case 3:
                 // Puede ir a 0 (arriba), 4 (der), 6 (abajo)
-                sucesores.add(new Nodo(intercambiar(this.estado, 3, 0), nuevoNivel, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 3, 4), nuevoNivel, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 3, 6), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 3, 0), nuevoNivel, this.costo + 1, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 3, 4), nuevoNivel, this.costo + 1, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 3, 6), nuevoNivel, this.costo + 1, this));
                 break;
             case 4:
                 // Puede ir a 1 (arriba), 3 (izq), 5 (der), 7 (abajo)
-                sucesores.add(new Nodo(intercambiar(this.estado, 4, 1), nuevoNivel, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 4, 3), nuevoNivel, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 4, 5), nuevoNivel, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 4, 7), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 4, 1), nuevoNivel, this.costo + 1, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 4, 3), nuevoNivel, this.costo + 1, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 4, 5), nuevoNivel, this.costo + 1, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 4, 7), nuevoNivel, this.costo + 1, this));
                 break;
             case 5:
                 // Puede ir a 2 (arriba), 4 (izq), 8 (abajo)
-                sucesores.add(new Nodo(intercambiar(this.estado, 5, 2), nuevoNivel, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 5, 4), nuevoNivel, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 5, 8), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 5, 2), nuevoNivel, this.costo + 1, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 5, 4), nuevoNivel, this.costo + 1, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 5, 8), nuevoNivel, this.costo + 1, this));
                 break;
             case 6:
                 // Puede ir a 3 (arriba) y 7 (der)
-                sucesores.add(new Nodo(intercambiar(this.estado, 6, 3), nuevoNivel, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 6, 7), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 6, 3), nuevoNivel, this.costo + 1, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 6, 7), nuevoNivel, this.costo + 1, this));
                 break;
             case 7:
                 // Puede ir a 4 (arriba), 6 (izq), 8 (der)
-                sucesores.add(new Nodo(intercambiar(this.estado, 7, 4), nuevoNivel, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 7, 6), nuevoNivel, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 7, 8), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 7, 4), nuevoNivel, this.costo + 1, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 7, 6), nuevoNivel, this.costo + 1, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 7, 8), nuevoNivel, this.costo + 1, this));
                 break;
             case 8:
                 // Puede ir a 5 (arriba) y 7 (izq)
-                sucesores.add(new Nodo(intercambiar(this.estado, 8, 5), nuevoNivel, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 8, 7), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 8, 5), nuevoNivel, this.costo + 1, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 8, 7), nuevoNivel, this.costo + 1, this));
                 break;
         }
         return sucesores;
