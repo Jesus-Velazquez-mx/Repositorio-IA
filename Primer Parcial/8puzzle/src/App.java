@@ -5,6 +5,7 @@ public class App {
         Nodo n = puzzle.busquedaxAnchura("1284376 5");
         System.out.println(n.estado);
         System.out.println(n.nivel);
+        System.out.println(n.costo);
         //n.imprimirCamino();
     }
 }

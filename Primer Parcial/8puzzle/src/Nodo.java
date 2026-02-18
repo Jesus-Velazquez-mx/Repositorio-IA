@@ -1,6 +1,6 @@
 import java.util.LinkedList;
 
-public class Nodo implements Comparable <Nodo> {
+public class Nodo implements Comparable<Nodo> {
 
     String estado;
     int nivel;
@@ -37,63 +37,77 @@ public class Nodo implements Comparable <Nodo> {
 
     LinkedList<Nodo> generarSucesores() {
         LinkedList<Nodo> sucesores = new LinkedList<>();
-        int indice = this.estado.indexOf(' ');
+        int indiceVacio = this.estado.indexOf(' ');
         int nuevoNivel = this.nivel + 1;
 
-        switch (indice) {
+        switch (indiceVacio) {
             case 0:
                 // Puede ir a 1 (derecha) y 3 (abajo)
-                sucesores.add(new Nodo(intercambiar(this.estado, 0, 1), nuevoNivel, this.costo + 1, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 0, 3), nuevoNivel, this.costo + 1, this));
+                sucesores.add(crearHijo(0, 1, nuevoNivel));
+                sucesores.add(crearHijo(0, 3, nuevoNivel));
                 break;
             case 1:
                 // Puede ir a 0 (izq), 2 (der), 4 (abajo)
-                sucesores.add(new Nodo(intercambiar(this.estado, 1, 0), nuevoNivel, this.costo + 1, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 1, 2), nuevoNivel, this.costo + 1, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 1, 4), nuevoNivel, this.costo + 1, this));
+                sucesores.add(crearHijo(1, 0, nuevoNivel));
+                sucesores.add(crearHijo(1, 2, nuevoNivel));
+                sucesores.add(crearHijo(1, 4, nuevoNivel));
                 break;
             case 2:
                 // Puede ir a 1 (izq) y 5 (abajo)
-                sucesores.add(new Nodo(intercambiar(this.estado, 2, 1), nuevoNivel, this.costo + 1, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 2, 5), nuevoNivel, this.costo + 1, this));
+                sucesores.add(crearHijo(2, 1, nuevoNivel));
+                sucesores.add(crearHijo(2, 5, nuevoNivel));
                 break;
             case 3:
                 // Puede ir a 0 (arriba), 4 (der), 6 (abajo)
-                sucesores.add(new Nodo(intercambiar(this.estado, 3, 0), nuevoNivel, this.costo + 1, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 3, 4), nuevoNivel, this.costo + 1, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 3, 6), nuevoNivel, this.costo + 1, this));
+                sucesores.add(crearHijo(3, 0, nuevoNivel));
+                sucesores.add(crearHijo(3, 4, nuevoNivel));
+                sucesores.add(crearHijo(3, 6, nuevoNivel));
                 break;
             case 4:
                 // Puede ir a 1 (arriba), 3 (izq), 5 (der), 7 (abajo)
-                sucesores.add(new Nodo(intercambiar(this.estado, 4, 1), nuevoNivel, this.costo + 1, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 4, 3), nuevoNivel, this.costo + 1, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 4, 5), nuevoNivel, this.costo + 1, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 4, 7), nuevoNivel, this.costo + 1, this));
+                sucesores.add(crearHijo(4, 1, nuevoNivel));
+                sucesores.add(crearHijo(4, 3, nuevoNivel));
+                sucesores.add(crearHijo(4, 5, nuevoNivel));
+                sucesores.add(crearHijo(4, 7, nuevoNivel));
                 break;
             case 5:
                 // Puede ir a 2 (arriba), 4 (izq), 8 (abajo)
-                sucesores.add(new Nodo(intercambiar(this.estado, 5, 2), nuevoNivel, this.costo + 1, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 5, 4), nuevoNivel, this.costo + 1, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 5, 8), nuevoNivel, this.costo + 1, this));
+                sucesores.add(crearHijo(5, 2, nuevoNivel));
+                sucesores.add(crearHijo(5, 4, nuevoNivel));
+                sucesores.add(crearHijo(5, 8, nuevoNivel));
                 break;
             case 6:
                 // Puede ir a 3 (arriba) y 7 (der)
-                sucesores.add(new Nodo(intercambiar(this.estado, 6, 3), nuevoNivel, this.costo + 1, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 6, 7), nuevoNivel, this.costo + 1, this));
+                sucesores.add(crearHijo(6, 3, nuevoNivel));
+                sucesores.add(crearHijo(6, 7, nuevoNivel));
                 break;
             case 7:
                 // Puede ir a 4 (arriba), 6 (izq), 8 (der)
-                sucesores.add(new Nodo(intercambiar(this.estado, 7, 4), nuevoNivel, this.costo + 1, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 7, 6), nuevoNivel, this.costo + 1, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 7, 8), nuevoNivel, this.costo + 1, this));
+                sucesores.add(crearHijo(7, 4, nuevoNivel));
+                sucesores.add(crearHijo(7, 6, nuevoNivel));
+                sucesores.add(crearHijo(7, 8, nuevoNivel));
                 break;
             case 8:
                 // Puede ir a 5 (arriba) y 7 (izq)
-                sucesores.add(new Nodo(intercambiar(this.estado, 8, 5), nuevoNivel, this.costo + 1, this));
-                sucesores.add(new Nodo(intercambiar(this.estado, 8, 7), nuevoNivel, this.costo + 1, this));
+                sucesores.add(crearHijo(8, 5, nuevoNivel));
+                sucesores.add(crearHijo(8, 7, nuevoNivel));
                 break;
         }
         return sucesores;
+    }
+
+    /* Método auxiliar para calcular el costo y crear el nuevo nodo */
+    private Nodo crearHijo(int indiceVacio, int indiceDestino, int nuevoNivel) {
+        // Extraemos el valor numérico de la ficha que se va a mover al espacio vacío
+        int valorFicha = Character.getNumericValue(this.estado.charAt(indiceDestino));
+        
+        // El nuevo costo es el acumulado del padre + el valor de la ficha movida
+        int nuevoCosto = this.costo + valorFicha;
+        
+        // Intercambiamos la posición en el string
+        String nuevoEstado = intercambiar(this.estado, indiceVacio, indiceDestino);
+        
+        return new Nodo(nuevoEstado, nuevoNivel, nuevoCosto, this);
     }
 
     public void imprimirCamino() {
@@ -107,6 +121,7 @@ public class Nodo implements Comparable <Nodo> {
             }
         }
         System.out.println("Nivel: " + this.nivel);
+        System.out.println("Costo acumulado: " + this.costo);
         System.out.println("----------------");
     }
 
