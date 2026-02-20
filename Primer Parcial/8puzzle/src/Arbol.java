@@ -1,4 +1,3 @@
-
 import java.util.*;
 
 public class Arbol {
@@ -71,35 +70,92 @@ public class Arbol {
         return null;
     }
 
-Nodo busquedaCostoUniforme(String estadoObjetivo) {
-    if (raiz == null) return null;
-    HashSet<String> visitados = new HashSet<>();
-    /* Ordena por nodo.costo */
-    PriorityQueue<Nodo> cola = new PriorityQueue<>();
-    cola.add(raiz);
-    /* No agregamos a visitados aquí, sino al extraer de la cola (Costo Uniforme estándar) */
-    while (!cola.isEmpty()) {
-        /* Lo sacamos de la lista y lo guardamos en "actual" */
-        Nodo actual = cola.poll();
-        /* Si es el estado objetivo, lo devolvemos */
-        if (actual.estado.equals(estadoObjetivo)) {
-            return actual;
+    Nodo busquedaCostoUniforme(String estadoObjetivo) {
+        if (raiz == null) {
+            return null;
         }
-        /* Si ya lo visitamos lo saltamos */
-        if (visitados.contains(actual.estado)) {
-            continue;
-        }
-        
-        visitados.add(actual.estado);
-        /* Genereamos los sucesores y los agregamos a la lista */
-        List<Nodo> sucesores = actual.generarSucesores();
-        for (Nodo hijo : sucesores) {
-            if (!visitados.contains(hijo.estado)) {
-                cola.add(hijo);
+        /* Guardamos los nodos visitados */
+        HashSet<String> visitados = new HashSet<>();
+        /* La PriorityQueue usará el compareTo de Nodo, que compara n.costo */
+        PriorityQueue<Nodo> cola = new PriorityQueue<>();
+        raiz.nivel = 0;
+        raiz.costo = 0;
+        cola.add(raiz);
+
+        while (!cola.isEmpty()) {
+            /* Extraemos el nodo con el menor costo acumulado */
+            Nodo actual = cola.poll();
+
+            if (visitados.contains(actual.estado)) {
+                continue;
+            }
+            visitados.add(actual.estado);
+
+            if (actual.estado.equals(estadoObjetivo)) {
+                return actual;
+            }
+
+            /* Generamos sucesores */
+            List<Nodo> sucesores = actual.generarSucesores();
+            for (Nodo hijo : sucesores) {
+                if (!visitados.contains(hijo.estado)) {
+                    /* Lógica de costo:
+                   El hueco (' ') en el padre ahora tiene la ficha que se movió en el hijo.
+                   Se suma el valor de la ficha movida al costo acumulado del padre para obtener el costo del hijo.
+                     */
+                    int idxHuecoPadre = actual.estado.indexOf(' ');
+                    char fichaMovidaChar = hijo.estado.charAt(idxHuecoPadre);
+                    int valorFicha = Character.getNumericValue(fichaMovidaChar);
+                    hijo.costo = actual.costo + valorFicha;
+                    cola.add(hijo);
+                }
             }
         }
+        return null;
     }
-    return null;
-}
+
+    Nodo busquedaCruz(String estadoObjetivo) {
+        if (raiz == null) {
+            return null;
+        }
+        /* Guardamos los nodos visitados */
+        HashSet<String> visitados = new HashSet<>();
+        /* La PriorityQueue usará el compareTo de Nodo, que compara n.costo */
+        PriorityQueue<Nodo> cola = new PriorityQueue<>();
+        raiz.costo = 0;
+        cola.add(raiz);
+
+        while (!cola.isEmpty()) {
+            /* Extraemos el nodo con el menor costo acumulado */
+            Nodo actual = cola.poll();
+
+            if (visitados.contains(actual.estado)) {
+                continue;
+            }
+            visitados.add(actual.estado);
+
+            if (actual.estado.equals(estadoObjetivo)) {
+                return actual;
+            }
+
+            /* Generamos sucesores */
+            List<Nodo> sucesores = actual.generarSucesores();
+            for (Nodo hijo : sucesores) {
+                if (!visitados.contains(hijo.estado)) {
+                    /* Lógica de costo:
+                   El hueco (' ') en el padre ahora tiene la ficha que se movió en el hijo.
+                   Se suma el valor de la ficha movida al costo acumulado del padre para obtener el costo del hijo.
+                   Además, se suma la heurística de cruz para el hijo.
+                   */
+                    int idxHuecoPadre = actual.estado.indexOf(' ');
+                    char fichaMovidaChar = hijo.estado.charAt(idxHuecoPadre);
+                    int valorFicha = Character.getNumericValue(fichaMovidaChar);
+                    hijo.costo = actual.costo + valorFicha + hijo.cruzheuristica(estadoObjetivo);
+                    cola.add(hijo);
+                }
+            }
+        }
+        return null;
+    }
 
 }

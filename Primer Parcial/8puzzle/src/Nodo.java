@@ -1,4 +1,10 @@
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 public class Nodo implements Comparable<Nodo> {
 
@@ -35,94 +41,89 @@ public class Nodo implements Comparable<Nodo> {
         this.padre = padre;
     }
 
-    LinkedList<Nodo> generarSucesores() {
+    public LinkedList<Nodo> generarSucesores() {
         LinkedList<Nodo> sucesores = new LinkedList<>();
-        int indiceVacio = this.estado.indexOf(' ');
+        int indice = this.estado.indexOf(' ');
         int nuevoNivel = this.nivel + 1;
-
-        switch (indiceVacio) {
+        switch (indice) {
             case 0:
-                // Puede ir a 1 (derecha) y 3 (abajo)
-                sucesores.add(crearHijo(0, 1, nuevoNivel));
-                sucesores.add(crearHijo(0, 3, nuevoNivel));
+                sucesores.add(new Nodo(intercambiar(this.estado, 0, 1), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 0, 3), nuevoNivel, this));
                 break;
+
             case 1:
-                // Puede ir a 0 (izq), 2 (der), 4 (abajo)
-                sucesores.add(crearHijo(1, 0, nuevoNivel));
-                sucesores.add(crearHijo(1, 2, nuevoNivel));
-                sucesores.add(crearHijo(1, 4, nuevoNivel));
+                sucesores.add(new Nodo(intercambiar(this.estado, 1, 0), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 1, 2), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 1, 4), nuevoNivel, this));
                 break;
+
             case 2:
-                // Puede ir a 1 (izq) y 5 (abajo)
-                sucesores.add(crearHijo(2, 1, nuevoNivel));
-                sucesores.add(crearHijo(2, 5, nuevoNivel));
+                sucesores.add(new Nodo(intercambiar(this.estado, 2, 1), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 2, 5), nuevoNivel, this));
                 break;
+
             case 3:
-                // Puede ir a 0 (arriba), 4 (der), 6 (abajo)
-                sucesores.add(crearHijo(3, 0, nuevoNivel));
-                sucesores.add(crearHijo(3, 4, nuevoNivel));
-                sucesores.add(crearHijo(3, 6, nuevoNivel));
+                sucesores.add(new Nodo(intercambiar(this.estado, 3, 0), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 3, 4), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 3, 6), nuevoNivel, this));
                 break;
+
             case 4:
-                // Puede ir a 1 (arriba), 3 (izq), 5 (der), 7 (abajo)
-                sucesores.add(crearHijo(4, 1, nuevoNivel));
-                sucesores.add(crearHijo(4, 3, nuevoNivel));
-                sucesores.add(crearHijo(4, 5, nuevoNivel));
-                sucesores.add(crearHijo(4, 7, nuevoNivel));
+                sucesores.add(new Nodo(intercambiar(this.estado, 4, 1), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 4, 3), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 4, 5), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 4, 7), nuevoNivel, this));
                 break;
+
             case 5:
-                // Puede ir a 2 (arriba), 4 (izq), 8 (abajo)
-                sucesores.add(crearHijo(5, 2, nuevoNivel));
-                sucesores.add(crearHijo(5, 4, nuevoNivel));
-                sucesores.add(crearHijo(5, 8, nuevoNivel));
+                sucesores.add(new Nodo(intercambiar(this.estado, 5, 2), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 5, 4), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 5, 8), nuevoNivel, this));
                 break;
+
             case 6:
-                // Puede ir a 3 (arriba) y 7 (der)
-                sucesores.add(crearHijo(6, 3, nuevoNivel));
-                sucesores.add(crearHijo(6, 7, nuevoNivel));
+                sucesores.add(new Nodo(intercambiar(this.estado, 6, 3), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 6, 7), nuevoNivel, this));
                 break;
+
             case 7:
-                // Puede ir a 4 (arriba), 6 (izq), 8 (der)
-                sucesores.add(crearHijo(7, 4, nuevoNivel));
-                sucesores.add(crearHijo(7, 6, nuevoNivel));
-                sucesores.add(crearHijo(7, 8, nuevoNivel));
+                sucesores.add(new Nodo(intercambiar(this.estado, 7, 4), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 7, 6), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 7, 8), nuevoNivel, this));
                 break;
+
             case 8:
-                // Puede ir a 5 (arriba) y 7 (izq)
-                sucesores.add(crearHijo(8, 5, nuevoNivel));
-                sucesores.add(crearHijo(8, 7, nuevoNivel));
+                sucesores.add(new Nodo(intercambiar(this.estado, 8, 5), nuevoNivel, this));
+                sucesores.add(new Nodo(intercambiar(this.estado, 8, 7), nuevoNivel, this));
                 break;
         }
         return sucesores;
     }
 
-    /* Método auxiliar para calcular el costo y crear el nuevo nodo */
-    private Nodo crearHijo(int indiceVacio, int indiceDestino, int nuevoNivel) {
-        // Extraemos el valor numérico de la ficha que se va a mover al espacio vacío
-        int valorFicha = Character.getNumericValue(this.estado.charAt(indiceDestino));
-        
-        // El nuevo costo es el acumulado del padre + el valor de la ficha movida
-        int nuevoCosto = this.costo + valorFicha;
-        
-        // Intercambiamos la posición en el string
-        String nuevoEstado = intercambiar(this.estado, indiceVacio, indiceDestino);
-        
-        return new Nodo(nuevoEstado, nuevoNivel, nuevoCosto, this);
-    }
-
     public void imprimirCamino() {
-        if (this.padre != null) {
-            this.padre.imprimirCamino();
-        }
-        for (int i = 0; i < 9; i++) {
-            System.out.print(this.estado.charAt(i) + " ");
-            if ((i + 1) % 3 == 0) {
-                System.out.println();
+        List<Nodo> camino = new ArrayList<>();
+        Set<Nodo> vistos = new HashSet<>();
+        Nodo actual = this;
+        while (actual != null) {
+            if (vistos.contains(actual)) {
+                break;
             }
+            vistos.add(actual);
+            camino.add(actual);
+            actual = actual.padre;
         }
-        System.out.println("Nivel: " + this.nivel);
-        System.out.println("Costo acumulado: " + this.costo);
-        System.out.println("----------------");
+        Collections.reverse(camino);
+        for (Nodo n : camino) {
+            for (int i = 0; i < 9; i++) {
+                System.out.print(n.estado.charAt(i) + " ");
+                if ((i + 1) % 3 == 0) {
+                    System.out.println();
+                }
+            }
+            System.out.println("Nivel: " + n.nivel
+                    + " | Costo: " + n.costo);
+            System.out.println("----------------");
+        }
     }
 
     private String intercambiar(String estado, int i, int j) {
@@ -133,8 +134,24 @@ public class Nodo implements Comparable<Nodo> {
         return new String(chars);
     }
 
+    /* Contamos los aciertos en una cruz (2,4,5,6 y 8) */
+    public int cruzheuristica(String estadoObjetivo) {
+        int e = 0;
+        int[] posiciones = {2, 4, 5, 6, 8};
+
+        for (int i : posiciones) {
+            char actual = this.estado.charAt(i);
+            char objetivo = estadoObjetivo.charAt(i);
+            /* El ' ' no es un error */
+            if (actual != ' ' && actual != objetivo) {
+                e++;
+            }
+        }
+        return e;
+    }
+
     @Override
     public int compareTo(Nodo otro) {
-        return this.costo == otro.costo ? 0 : this.costo > otro.costo ? 1 : -1;
+        return Integer.compare(this.costo, otro.costo);
     }
 }
