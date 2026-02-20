@@ -134,7 +134,7 @@ public class Nodo implements Comparable<Nodo> {
         return new String(chars);
     }
 
-    /* Contamos los aciertos en una cruz (2,4,5,6 y 8) */
+    /* Contamos los errores en una cruz (2,4,5,6 y 8) */
     public int cruzheuristica(String estadoObjetivo) {
         int e = 0;
         int[] posiciones = {2, 4, 5, 6, 8};
