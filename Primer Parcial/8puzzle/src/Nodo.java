@@ -11,12 +11,14 @@ public class Nodo implements Comparable<Nodo> {
     int nivel;
     int costo;
     Nodo padre;
+    int nodosExpandidos; 
 
     public Nodo(String estado) {
         this.estado = estado;
         this.nivel = 0;
         this.costo = 0;
         this.padre = null;
+        
     }
 
     public Nodo(String estado, int nivel) {

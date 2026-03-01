@@ -12,6 +12,7 @@ public class Arbol {
         if (raiz == null) {
             return null;
         }
+        int expandidos = 0;
         /* Guardamos los nodos visitados */
         HashSet<String> visitados = new HashSet<>();
         /* Lista de estados a visitar */
@@ -23,8 +24,10 @@ public class Arbol {
         while (!cola.isEmpty()) {
             /* Lo sacamos de la lista y lo guardamos en "actual" */
             Nodo actual = cola.poll();
+            expandidos++;
             /* Si es el estado objetivo, lo devolvemos */
             if (actual.estado.equals(estadoObjetivo)) {
+                actual.nodosExpandidos = expandidos;
                 return actual;
             }
             /* Genereamos los sucesores y los agregamos a la lista */
@@ -43,6 +46,7 @@ public class Arbol {
         if (raiz == null) {
             return null;
         }
+        int expandidos = 0;
         /* Guardamos los nodos visitados */
         HashSet<String> visitados = new HashSet<>();
         /* Pila de estados a visitar */
@@ -54,8 +58,10 @@ public class Arbol {
         while (!pila.isEmpty()) {
             /* Lo sacamos de la pila y lo guardamos en "actual" */
             Nodo actual = pila.pop();
+            expandidos++;
             /* Si es el estado objetivo, lo devolvemos */
             if (actual.estado.equals(estadoObjetivo)) {
+                actual.nodosExpandidos = expandidos;
                 return actual;
             }
             /* Genereamos los sucesores y los agregamos a la pila */
@@ -74,6 +80,7 @@ public class Arbol {
         if (raiz == null) {
             return null;
         }
+        int expandidos = 0;
         /* Guardamos los nodos visitados */
         HashSet<String> visitados = new HashSet<>();
         /* La PriorityQueue usará el compareTo de Nodo, que compara n.costo */
@@ -85,6 +92,7 @@ public class Arbol {
         while (!cola.isEmpty()) {
             /* Extraemos el nodo con el menor costo acumulado */
             Nodo actual = cola.poll();
+            expandidos++;
 
             if (visitados.contains(actual.estado)) {
                 continue;
@@ -92,6 +100,7 @@ public class Arbol {
             visitados.add(actual.estado);
 
             if (actual.estado.equals(estadoObjetivo)) {
+                actual.nodosExpandidos = expandidos;
                 return actual;
             }
 
@@ -118,6 +127,7 @@ public class Arbol {
         if (raiz == null) {
             return null;
         }
+        int expandidos = 0;
         /* Guardamos los nodos visitados */
         HashSet<String> visitados = new HashSet<>();
         /* La PriorityQueue usará el compareTo de Nodo, que compara n.costo */
@@ -128,6 +138,7 @@ public class Arbol {
         while (!cola.isEmpty()) {
             /* Extraemos el nodo con el menor costo acumulado */
             Nodo actual = cola.poll();
+            expandidos++;
 
             if (visitados.contains(actual.estado)) {
                 continue;
@@ -135,6 +146,7 @@ public class Arbol {
             visitados.add(actual.estado);
 
             if (actual.estado.equals(estadoObjetivo)) {
+                actual.nodosExpandidos = expandidos;
                 return actual;
             }
 

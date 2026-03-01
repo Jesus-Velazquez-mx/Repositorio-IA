@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 public class App {
@@ -84,46 +85,39 @@ public class App {
     private static void generarTablaComparativa(String inicio, String fin) {
         /* Encabezado de la tabla de rendimiento (comparativa) */
         System.out.println("\n=========================== Comparación ===========================");
+        System.out.printf("%-20s | %-12s | %-15s | %-10s | %-10s\n", "Método", "Expandidos", "Tiempo (ms)", "Longitud", "Costo");
+        System.out.println("-------------------------------------------------------------------------------------");
 
-        String[] etiquetasMetodos = {
-                "BFS (Anchura)",
-                "DFS (Profundidad)",
-                "UCS (Costo Uniforme)",
-                "A* (Heurística H2)"
-        };
+        String[] etiquetas = {"BFS (Anchura)", "DFS (Profundidad)", "UCS (Uniforme)", "A* (Cruz)"};
 
         for (int i = 1; i <= 4; i++) {
             Nodo nodoRaiz = new Nodo(inicio);
-            Arbol arbolBusqueda = new Arbol(nodoRaiz);
-            Nodo nodoResultado = null;
+            Arbol arbol = new Arbol(nodoRaiz);
+            Nodo res = null;
 
-            long tiempoInicio = System.nanoTime();
-
+            long tI = System.nanoTime();
             switch (i) {
-                case 1: nodoResultado = arbolBusqueda.busquedaxAnchura(fin); break;
-                case 2: nodoResultado = arbolBusqueda.busquedaEnProfunidad(fin); break;
-                case 3: nodoResultado = arbolBusqueda.busquedaCostoUniforme(fin); break;
-                case 4: nodoResultado = arbolBusqueda.busquedaCruz(fin); break;
+                case 1:
+                    res = arbol.busquedaxAnchura(fin);
+                    break;
+                case 2:
+                    res = arbol.busquedaEnProfunidad(fin);
+                    break;
+                case 3:
+                    res = arbol.busquedaCostoUniforme(fin);
+                    break;
+                case 4:
+                    res = arbol.busquedaCruz(fin);
+                    break;
             }
+            long tF = System.nanoTime();
+            double totalMs = (tF - tI) / 1_000_000.0;
 
-            long tiempoFin = System.nanoTime();
-            double tiempoTotalMs = (tiempoFin - tiempoInicio) / 1_000_000.0;
-
-            /* Impresión de resultados con formato alineado */
-            if (nodoResultado != null) {
-                System.out.printf("%-20s | Prof: %-3d | Costo: %-5d | Tiempo: %8.2f ms\n",
-                        etiquetasMetodos[i - 1],
-                        nodoResultado.nivel,
-                        nodoResultado.costo,
-                        tiempoTotalMs
-                );
-            } else {
-                System.out.printf("%-20s | Sin solución           | Tiempo: %8.2f ms\n",
-                        etiquetasMetodos[i - 1],
-                        tiempoTotalMs
-                );
+            if (res != null) {
+                System.out.printf("%-20s | %-12d | %-15.2f | %-10d | %-10d\n",
+                        etiquetas[i - 1], res.nodosExpandidos, totalMs, res.nivel, res.costo);
             }
         }
-        System.out.println("=========================================================================\n");
+        System.out.println("=====================================================================================");
     }
 }
