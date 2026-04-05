@@ -89,7 +89,7 @@ def procesar_y_limpiar_total(carpeta, size=(160, 160)):
     print("="*40)
 
 # Configuración de la ruta de trabajo (ajustar según el entorno)
-RUTA_TRABAJO = r"C:\Users\jesu1\OneDrive\Documentos\Tecnológico de Culiacán\Semestre 8\Inteligencia Artificial\Repositorio IA\Segundo Parcial\Reconocimiento Facial\Dataset\train\F8_AlonzoBodden"
+RUTA_TRABAJO = r"C:\Users\jesu1\OneDrive\Documentos\Tecnológico de Culiacán\Semestre 8\Inteligencia Artificial\Repositorio IA\Segundo Parcial\Reconocimiento Facial\Dataset\A2_JesusVelazquez"
 
 if __name__ == "__main__":
     procesar_y_limpiar_total(RUTA_TRABAJO)
