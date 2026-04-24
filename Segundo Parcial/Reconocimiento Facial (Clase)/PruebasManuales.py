@@ -3,7 +3,7 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 import tensorflow as tf
 
-def predict_celebrity(img_path, class_names, model_path='celebrity_model.h5'):
+def predict_celebrity(img_path, class_names, model_path=r'C:\Users\jesu1\OneDrive\Documentos\Tecnológico de Culiacán\Semestre 8\Inteligencia Artificial\Repositorio IA\Segundo Parcial\Reconocimiento Facial (Clase)\celebrity_model.h5'):
     # Load model and image
     model = tf.keras.models.load_model(model_path)
     img = image.load_img(img_path, target_size=(160, 160))
