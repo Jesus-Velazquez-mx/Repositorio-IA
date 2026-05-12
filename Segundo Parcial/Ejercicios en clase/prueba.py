@@ -1,1 +1,0 @@
-print("¡Python ya está jalando al cien en mi VS Code!")
